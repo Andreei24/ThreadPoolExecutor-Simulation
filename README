@@ -1,0 +1,17 @@
+Tema 2 SDA
+Robert-Andrei Raucescu 335CB
+
+Functii:
+	-add_tasks: Aloca si initializeaza o structura pentru un Task, id-ul alocat unui task este primul element cu valoarea false dintr-un vector de bool care idica valabilitatea unui id.
+
+	-Afis*: Functii de afisare pentru fiecare tip de Queue folosit (Waiting, Running & Finished)
+
+	-Run: Functia care incarca in 'procesor' un task dupa ce i-a fost asignat un thread care sa il ruleze. Aceasta verifica daca mai sunt thread-uri si task-uri libere si le grupeaza in running queue. Apoi pentru fiecare task din running queue se calculeaza timpul de executie ramas dupa sfarsitul rularii cuantei curente sau a timpului dat. Daca task-ul s-a terminat, threadu-ul asignat lui este pus inapoi in stiva, id-ul este eliberat si task-ul trece in queue-ul finished. Daca acesta nu si-a terminat executia, ii scade timpul ramas cu valoarea cuantei si creste timpul executat cu aceeasi valoare. 
+
+	-getTask/Thread: parcurge fiecare element al stivelor running -> waiting -> finished si verifica daca task-ul este existent sau nu, iar pentru thread-uri, verifica running queue pentru id-ul lui, iar daca acesta nu este gasit, insemna ca este idle. (In main se face o verificare daca id-ul dat ca parametru functiei exista, adica ID < N)
+
+	-comp_tasks: compara doua task-uri primite ca parametru dupa crieriile specificate.
+
+	-sortQ: functie de sortare care este folosita dupa creearea de task-uri noi pentru a mentine waiting queue in ordine.
+
+	-getMinRunTime/getMaxRunTime: Cauta cel mai mic/mare timp de executie din running queue si il intoarce.
