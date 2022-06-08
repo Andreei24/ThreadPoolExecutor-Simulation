@@ -9,14 +9,14 @@ int AfisTask(void* task, FILE* g){
     return  1;
 }
 
-int AfisTaskWait(void* task, FILE* g){
+int AfisTaskWait(void* task, FILE* g){ //Printing the details of a task in the waiting queue
     Task* aux = (Task*) task;
     fprintf(g,"(%d: priority = %d, remaining_time = %u)",aux->id,aux->prio,aux->time_left);
 
     return 1;
 }
 
-int AfisTaskRun(void* task, FILE* g){
+int AfisTaskRun(void* task, FILE* g){ //Printing the details of a task in the running queue
     Task* aux = (Task*) task;
     fprintf(g,"(%d: priority = %d, remaining_time = %u, running_thread = %d)",
     aux->id,aux->prio,aux->time_left, ((Thread*)(aux->thread))->id);
@@ -24,21 +24,21 @@ int AfisTaskRun(void* task, FILE* g){
     return 1;
 } 
 
-int AfisTaskFinish(void* task, FILE* g){
+int AfisTaskFinish(void* task, FILE* g){ //Printing the details of a task in the finished queue
     Task* aux = (Task*) task;
     fprintf(g,"(%d: priority = %d, executed_time = %u)",aux->id, aux->prio, aux->time_executed);
 
     return 1;
 }
 
-int AfisThread(void* th, FILE* g){
+int AfisThread(void* th, FILE* g){ //Printing the details of a thread
     Thread* aux = (Thread*) th;
     fprintf(g,"Thread: %d \n",aux->id);
 
     return 1;
 }
 
-void AfisWaiting(void* waitQ, FILE* g){
+void AfisWaiting(void* waitQ, FILE* g){ // Print the contents of the waiting queue
     
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
@@ -60,7 +60,7 @@ void AfisWaiting(void* waitQ, FILE* g){
     fprintf(g,"]\n");
 }
 
-void AfisRunning(void* runQ, FILE* g){
+void AfisRunning(void* runQ, FILE* g){ // Print the contents of the running queue
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
     
@@ -81,7 +81,7 @@ void AfisRunning(void* runQ, FILE* g){
     fprintf(g,"]\n");
 }
 
-void AfisFinished(void* finishQ, FILE* g){
+void AfisFinished(void* finishQ, FILE* g){ // Print the contents of the finished queue
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
     
@@ -102,10 +102,10 @@ void AfisFinished(void* finishQ, FILE* g){
     fprintf(g,"]\n");
 }
 
-int comp_tasks(void* task1, void* task2){
+int comp_tasks(void* task1, void* task2){ // Compare two tasks
     Task* aux1 = (Task*) task1;
     Task* aux2 = (Task*) task2;
-    // DESC PRIO > CRESC TIME > CRESC ID
+    // DESC PRIO > ASC TIME > ASC ID
 
     if(aux1->prio > aux2->prio)
         return 1;
@@ -125,7 +125,7 @@ int comp_tasks(void* task1, void* task2){
 
 }
 
-void sortQ(void* Queue){
+void sortQ(void* Queue){ // sorting a given queue
     int count = 0;
     void* aux2 = calloc(1,sizeof(Task));
 
@@ -159,7 +159,7 @@ void sortQ(void* Queue){
     }
 }
 
-void add_tasks(void* waitQ, bool* ids, int nr, unsigned int time, int prio, FILE* g){
+void add_tasks(void* waitQ, bool* ids, int nr, unsigned int time, int prio, FILE* g){ //Creates tasks and submits them to the waiting queue
     for(int i = 0; i < nr; i++){
         Task* task = malloc(sizeof(Task));
         
@@ -182,7 +182,7 @@ void add_tasks(void* waitQ, bool* ids, int nr, unsigned int time, int prio, FILE
     sortQ(waitQ);
 }
 
-void Run(void* waitQ, void* runQ, void* finishQ, void* threadS, unsigned int time, bool* ids){
+void Run(void* waitQ, void* runQ, void* finishQ, void* threadS, unsigned int time, bool* ids){//Running the tasks for a given amount of time
 
     void* task = malloc(sizeof(Task));
     void *thread = malloc(sizeof(Thread));
@@ -228,7 +228,7 @@ void Run(void* waitQ, void* runQ, void* finishQ, void* threadS, unsigned int tim
     }
 }
 
-void getTask(void* waitQ, void* runQ, void* finishQ, int task_id, FILE* g){
+void getTask(void* waitQ, void* runQ, void* finishQ, int task_id, FILE* g){ //Find and print the details of a task
 
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
@@ -283,7 +283,7 @@ void getTask(void* waitQ, void* runQ, void* finishQ, int task_id, FILE* g){
     }
 }
 
-void getThread(void* runQ, int thread_id, FILE* g){
+void getThread(void* runQ, int thread_id, FILE* g){ // Find and print the details of a thread
     
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
@@ -306,7 +306,7 @@ void getThread(void* runQ, int thread_id, FILE* g){
         fprintf(g,"Thread %d is idle.\n",thread_id);
 }
 
-int getMinRunTime(void* runQ){
+int getMinRunTime(void* runQ){ //Find the least amount of time tasks can be run until one is done
 
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
@@ -326,7 +326,7 @@ int getMinRunTime(void* runQ){
     return time;
 }
 
-int getMaxRunTime(void* runQ){
+int getMaxRunTime(void* runQ){//Find the maximum amount of time tasks can be run until the longest one is done
 
     void* aux_q = InitQ(sizeof(Task),MAX);
     void* aux = malloc(sizeof(Task));
