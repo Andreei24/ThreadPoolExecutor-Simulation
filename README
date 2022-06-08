@@ -1,5 +1,5 @@
 Tema 2 SDA
-Robert-Andrei Raucescu 335CB
+Robert-Andrei Raucescu
 
 Functii:
 	-add_tasks: Aloca si initializeaza o structura pentru un Task, id-ul alocat unui task este primul element cu valoarea false dintr-un vector de bool care idica valabilitatea unui id.
